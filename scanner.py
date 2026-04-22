@@ -3,12 +3,14 @@ import sys
 import threading
 
 # 1. Configuration & Argument Check
-if len(sys.argv) != 2:
+if len(sys.argv) != 3:
     print("Usage: python scanner.py <ip_or_domain>")
     sys.exit()
 
 target = sys.argv[1]
-ports = range(1, 1025) 
+start_port, end_port = sys.argv[2].split('-')
+ports = range(int(start_port), int(end_port) + 1)
+
 # Limits us to 50 active workers to avoid crashing your connection
 thread_limiter = threading.BoundedSemaphore(value=50)
 
